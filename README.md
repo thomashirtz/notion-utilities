@@ -1,1 +1,1 @@
-# edit-notion
+# notion-utilities

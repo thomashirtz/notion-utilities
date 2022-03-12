@@ -3,7 +3,7 @@ from typing import Callable
 from typing import List
 
 from notion_client import Client
-from edit_notion.properties import Property
+from notion_utilities.properties import Property
 
 
 def query_database(client: Client, database_id: str, page_size: int = 100):
