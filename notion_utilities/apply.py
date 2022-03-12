@@ -4,7 +4,7 @@ from typing import List
 
 from notion_client import Client
 
-from notion_utilities.properties import Property, Title
+from notion_utilities.properties import Property
 from notion_utilities.query import query_database
 from notion_utilities.utilities import get_title
 
