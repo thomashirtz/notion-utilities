@@ -1,0 +1,2 @@
+from notion_utilities.apply import apply_to_database
+from notion_utilities.query import query_database
