@@ -10,8 +10,8 @@ from notion_utilities import apply_to_database
 from notion_utilities.properties import Formula, RichText
 
 
-def copy(source_value):  # unpacked values of the properties retrieved using source_list
-    return [source_value]  # list of values that will be attributed to target_list
+def copy(source_value):
+    return source_value
 
 
 token = ''
@@ -23,8 +23,8 @@ if __name__ == '__main__':
     apply_to_database(
         token=token,
         database_id=database_id,
-        source_property_list=[Formula('Input')],
-        target_property_list=[RichText('Output')],
+        source=Formula('Input'),
+        target=RichText('Output'),
         function=copy,
     )
 ```
@@ -37,7 +37,7 @@ from notion_utilities.properties import RichText
 
 
 def get_pinyin(source_value):  
-    return [pinyin.get(source_value, format="strip")] 
+    return pinyin.get(source_value, format="strip")
 
 
 token = ''
@@ -47,8 +47,8 @@ if __name__ == '__main__':
     apply_to_database(
         token=token,
         database_id=database_id,
-        source_property_list=[RichText('Chinese')],
-        target_property_list=[RichText('Pinyin')],
+        source=RichText('Chinese'),
+        target=RichText('Pinyin'),
         function=get_pinyin,
     )
 ```
