@@ -1,34 +1,86 @@
 # notion-utilities
 
+Library to perform basic transformation on notion database.
 
 
-## Use case examples:
+## Example of use case:
 
+
+### Add a suffix, a prefix or apply a transformation
 
 ```
 from notion_utilities import apply_to_database
-from notion_utilities.properties import Formula, RichText
+from notion_utilities.properties import RichText
 
 
-def copy(source_value):
-    return source_value
+def suffix_and_prefix(value):
+    return 'suffix_' + value + '_prefix'
 
 
 token = ''
 database_id = ''
 
 if __name__ == '__main__':
-    # Example of usage: copy the content from the property named 'Input' to
-    # the rich-text property named 'Output'
     apply_to_database(
         token=token,
         database_id=database_id,
-        source=Formula('Input'),
+        source=RichText('Input'),
         target=RichText('Output'),
         function=copy,
     )
 ```
 
+### Possibility to use several properties and assign to several properties
+
+
+```
+from notion_utilities import apply_to_database
+from notion_utilities.properties import RichText
+
+
+def transform(input_1, input_2):  
+    # some useful transformation
+    return output
+
+
+token = ''
+database_id = ''
+
+if __name__ == '__main__':
+    apply_to_database(
+        token=token,
+        database_id=database_id,
+        source=[RichText('Input 1'), RichText('Input 2')],
+        target=RichText('Output'),
+        function=get_pinyin,
+    )
+```
+
+```
+from notion_utilities import apply_to_database
+from notion_utilities.properties import RichText
+
+
+def transform(input):  
+    # some useful transformation
+    return output_1, output_2
+
+
+token = ''
+database_id = ''
+
+if __name__ == '__main__':
+    apply_to_database(
+        token=token,
+        database_id=database_id,
+        source=RichText('Input'),
+        target=[RichText('Output 1'), RichText('Output 2')],
+        function=get_pinyin,
+    )
+```
+
+
+### Property transformation (e.g. transform to pinyin)
 ```
 import pinyin
 
@@ -36,8 +88,8 @@ from notion_utilities import apply_to_database
 from notion_utilities.properties import RichText
 
 
-def get_pinyin(source_value):  
-    return pinyin.get(source_value, format="strip")
+def get_pinyin(chinese):  
+    return pinyin.get(chinese)
 
 
 token = ''
@@ -52,6 +104,7 @@ if __name__ == '__main__':
         function=get_pinyin,
     )
 ```
+
 
 # License
 
