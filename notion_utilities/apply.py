@@ -1,25 +1,30 @@
 from typing import Any
 from typing import Callable
-from typing import List
+from typing import Sequence
+from typing import Union
 
 from notion_client import Client
 
 from notion_utilities.properties import Property
 from notion_utilities.query import query_database
-from notion_utilities.utilities import get_title
+from notion_utilities.utilities import get_title, to_list
 
 
 def apply_to_database(
         token: str,
         database_id: str,
-        function: Callable[..., List[Any]],
-        source_property_list: List[Property],
-        target_property_list: List[Property],
+        function: Callable[..., Any],
+        source: Union[Property, Sequence[Property]],
+        target: Union[Property, Sequence[Property]],
         page_size: int = 100,
         update: bool = True
-):
+) -> None:
+    source_property_list = to_list(source)
+    target_property_list = to_list(target)
+
     client = Client(auth=token)
     page_list = query_database(client, database_id, page_size)
+
     for i, page in enumerate(page_list):
         args = []
         for source in source_property_list:
@@ -27,7 +32,10 @@ def apply_to_database(
 
         properties = {}
         property_name_to_value = {}
-        target_value_list = function(*args)
+        target_value_list = to_list(function(*args))
+
+        assert len(target_value_list) == len(target_property_list)
+
         for value, target in zip(target_value_list, target_property_list):
             properties[target.name] = target.get_object(value)
             property_name_to_value[target.name] = value

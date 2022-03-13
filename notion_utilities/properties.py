@@ -2,6 +2,11 @@ from abc import ABC
 from typing import Any
 
 
+# todo add possibility give dict input
+# todo how to manage staticmethod
+# todo find way to simplify
+
+
 class Property(ABC):
     def __init__(self, name):
         self.name = name
@@ -22,7 +27,7 @@ class Title(Property):
 
 
 class RichText(Property):
-    def get_value(self, object_dict: dict) -> Any:
+    def get_value(self, object_dict: dict) -> str:
         return object_dict['rich_text'][0]['text']['content']
 
     def get_object(self, value: str) -> dict:
@@ -38,7 +43,7 @@ class Number(Property):
 
 
 class URL(Property):
-    def get_value(self, object_dict: dict) -> Any:
+    def get_value(self, object_dict: dict) -> str:
         return object_dict['number']
 
     def get_object(self, value: str) -> dict:
@@ -57,3 +62,11 @@ class Formula(Property):
     def get_value(self, object_dict: dict) -> Any:
         formula_type = object_dict['formula']['type']
         return object_dict['formula'][formula_type]
+
+
+class Select(Property):
+    def get_value(self, object_dict: dict) -> str:
+        return object_dict['select']['name']
+
+    def get_object(self, value: str) -> dict:
+        return {'select': {'name': value}}
