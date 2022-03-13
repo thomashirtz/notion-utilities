@@ -2,6 +2,11 @@
 
 Library to perform basic transformation on notion database.
 
+## Installation
+
+```
+pip install git+https://github.com/thomashirtz/notion-utilities#egg=notion-utilities
+```
 
 ## Example of use case:
 
