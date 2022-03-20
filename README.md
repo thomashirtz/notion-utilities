@@ -31,7 +31,7 @@ if __name__ == '__main__':
         database_id=database_id,
         source=RichText('Input'),
         target=RichText('Output'),
-        function=copy,
+        function=suffix_and_prefix,
     )
 ```
 
@@ -57,7 +57,7 @@ if __name__ == '__main__':
         database_id=database_id,
         source=[RichText('Input 1'), RichText('Input 2')],
         target=RichText('Output'),
-        function=get_pinyin,
+        function=transform,
     )
 ```
 
@@ -80,7 +80,7 @@ if __name__ == '__main__':
         database_id=database_id,
         source=RichText('Input'),
         target=[RichText('Output 1'), RichText('Output 2')],
-        function=get_pinyin,
+        function=transform,
     )
 ```
 
