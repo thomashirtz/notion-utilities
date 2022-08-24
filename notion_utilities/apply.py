@@ -19,6 +19,19 @@ def apply_to_database(
         page_size: int = 100,
         update: bool = True
 ) -> None:
+    """Apply a transformation to the `source` using the `function` in order to
+    update the `target` property(ies) of a Notion database.
+
+    Args:
+        token: Notion token used to authenticate.
+        database_id: ID of the database that needs to be transformed.
+        function: Function that will be applied to the database.
+        source: Source property(ies).
+        target: Target property(ies)
+        page_size: Number of pages to fetch at each iteration.
+        update: Boolean whether to update the property(ies). It can be set to
+            `False` in order to inspect the resulting target property(ies).
+    """
     source_property_list = to_list(source)
     target_property_list = to_list(target)
 
