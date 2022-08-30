@@ -8,7 +8,32 @@ Library to perform basic transformation on notion database.
 pip install git+https://github.com/thomashirtz/notion-utilities#egg=notion-utilities
 ```
 
-## Example of use case:
+## How to set up ?
+
+### 1. Creation of an integration
+
+Create an [integration](https://www.notion.so/my-integrations) for the notion-utilities library. The integration needs to target the workplace containing the database that will be modified.
+
+Option needed:
+- [x] Read content
+- [x] Update content
+- [x] Insert content
+
+Copy the `Internal Integration Token`, it will be the `token` argument of the functions.
+
+### 2. Share the database with the Integration
+
+Go to your database in notion => Click on `Share` => `Invite` => Select the integration that you just created.
+
+Copy the link of the database (simply the URL on a browser, on the application => Click on `...` => `Copy Link`).
+
+Extract the `database_id` from the URL : `https://www.notion.so/<workspace_name>/<database_id>?v=<view_id>`
+
+### 3. Run your scripts
+
+Create the script that you want to run and set the `token` and the `database_id` with the one got from the [step 1](#1-creation-of-an-integration) and the [step 2](#2-share-the-database-with-the-integration), respectively.
+
+## Examples of use case:
 
 
 ### Add a suffix, a prefix or apply a transformation
