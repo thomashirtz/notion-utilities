@@ -1,9 +1,15 @@
+import collections.abc
+from typing import List
+from typing import Sequence
+from typing import TypeVar
+from typing import Union
+
 from notion_utilities.properties import Title
-import collections
-from typing import Any
+
+T = TypeVar('T')
 
 
-def get_title(page: dict) -> str:  # todo simplify code
+def get_title(page: dict) -> str:
     """Return the title of a page when a dictionary of the page is inputted.
 
     Args:
@@ -18,19 +24,18 @@ def get_title(page: dict) -> str:  # todo simplify code
             return Title(property_name).get_value(dictionary)
 
 
-def is_sequence(obj: Any) -> bool:
-    """Check whether an object is a sequence.
+def to_list(obj: Union[Sequence[T], T]) -> List[T]:
+    """Transforms an object to a list.
 
     Args:
-        obj: Any object to inspect.
+        obj: Any object.
 
     Returns:
-        A boolean indicating if the object is a sequence.
+        The object converted in a list.
     """
-    if isinstance(obj, str):
-        return False
-    return isinstance(obj, collections.abc.Sequence)  # noqa
-
-
-def to_list(obj: Any) -> list:
-    return obj if is_sequence(obj) else [obj]
+    if isinstance(obj, (str, bytes)):
+        return [obj]
+    elif isinstance(obj, collections.abc.Sequence):
+        return list(obj)
+    else:
+        return [obj]
