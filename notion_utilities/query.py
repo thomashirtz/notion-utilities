@@ -18,15 +18,14 @@ def query_database(
         List of the pages present in the database.
     """
     results = []
-    query = client.databases.query(
-        database_id=database_id, page_size=page_size,
-    )
-    results.extend(query['results'])
-    while query['next_cursor'] or (query['results'] is None and not results):
+    query = {'has_more': True, 'next_cursor': None}
+
+    while query['has_more']:
         query = client.databases.query(
             database_id=database_id,
             start_cursor=query['next_cursor'],
             page_size=page_size,
         )
         results.extend(query['results'])
+
     return results
