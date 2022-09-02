@@ -21,7 +21,7 @@ def query_database(
     query = client.databases.query(
         database_id=database_id, page_size=page_size,
     )
-    results.extend(query['results'])  # todo simplify process
+    results.extend(query['results'])
     while query['next_cursor'] or (query['results'] is None and not results):
         query = client.databases.query(
             database_id=database_id,
