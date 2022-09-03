@@ -1,5 +1,6 @@
 from abc import ABC
 from typing import Any
+from typing import Optional
 
 
 # todo add possibility give dict input
@@ -28,6 +29,7 @@ class Title(Property):
 
 class RichText(Property):
     def get_value(self, object_dict: dict) -> str:
+        # todo fix bug empty property
         return object_dict['rich_text'][0]['text']['content']
 
     def get_object(self, value: str) -> dict:
@@ -70,3 +72,15 @@ class Select(Property):
 
     def get_object(self, value: str) -> dict:
         return {'select': {'name': value}}
+
+
+class Status(Property):
+    def get_value(self, object_dict: dict) -> str:
+        status = object_dict['status']
+        return '' if status is None else status['name']
+
+    def get_object(self, value: Optional[str]) -> dict:
+        if value is None or not value:
+            return {'status': None}
+        else:
+            return {'status': {'name': value}}
