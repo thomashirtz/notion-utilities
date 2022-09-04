@@ -3,6 +3,7 @@ from typing import List
 from typing import Sequence
 from typing import TypeVar
 from typing import Union
+from typing import Any
 
 from notion_utilities.properties import Title
 
@@ -39,3 +40,22 @@ def to_list(obj: Union[Sequence[T], T]) -> List[T]:
         return list(obj)
     else:
         return [obj]
+
+
+def find(nested_structure: Union[dict, list], key_list: List[str, int]) -> Any:
+    """Find a value in a nested structure using a list of keys.
+
+    Args:
+        nested_structure: Nested structure to retrieve from.
+        key_list: List of the keys and indexes forming the path to the value.
+
+    Returns:
+        Value at the path's location or `None` if the path did not exist.
+    """
+    try:
+        tmp = dict(nested_structure)
+        for key in key_list:
+            tmp = tmp[key]
+        return tmp
+    except (IndexError, KeyError, TypeError):
+        return None
