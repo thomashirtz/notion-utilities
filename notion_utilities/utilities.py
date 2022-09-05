@@ -59,3 +59,36 @@ def find(nested_structure: Union[dict, list], key_list: List[str, int]) -> Any:
         return tmp
     except (IndexError, KeyError, TypeError):
         return None
+
+
+def fallback(
+    condition: Any,
+    default_value: Any,
+    fallback_value: Any,
+    fallback_if_none: bool = True,
+    fallback_if_not: bool = True,
+) -> Any:
+    """Function that will give value depending on `condition`. Giving the
+    `default_value` by default, and the `fallback_value` depending on if
+    `condition` is evaluated as `not` or `None`.
+
+    The fallback only happens if the specific option is activated.
+
+    Args:
+        condition: Argument used as the condition.
+        default_value: Default value.
+        fallback_value: Value when the fallback occurs.
+        fallback_if_none: Boolean to activate the fallback if `condition` is `None`.
+        fallback_if_not: Boolean to activate the fallback if `condition` is `not`.
+
+    Returns:
+        The `default_value` or the `fallback_value`.
+    """
+    if fallback_if_not:
+        if not condition:
+            return fallback_value
+    if fallback_if_none:
+        if condition is None:
+            return fallback_value
+    else:
+        return default_value
