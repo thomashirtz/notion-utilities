@@ -1,11 +1,19 @@
 from abc import ABC
 from typing import Any
 from typing import Optional
+from typing import List
+from typing import Union
+
+from notion_utilities.utilities import fallback, find
 
 
 # todo add possibility give dict input
 # todo how to manage staticmethod
 # todo find way to simplify
+# keep formatting
+# use at your own danger => will never touch the source, so if you want to be sure to not loose data put it in new one
+# change to property dict
+# get_value(nexted_structure: Union|list, dict], path: list) -> Any find
 
 
 class Property(ABC):
@@ -20,11 +28,15 @@ class Property(ABC):
 
 
 class Title(Property):
-    def get_value(self, object_dict: dict) -> Any:
-        return object_dict['title'][0]['text']['content']
+    def get_value(self, object_dict: dict) -> Optional[str]:
+        return find(object_dict, ['title', 0, 'text', 'content'])
 
-    def get_object(self, value: str) -> dict:
-        return {'title': [{'text': {'content': value}}]}
+    def get_object(self, value: Optional[str]) -> dict:
+        return fallback(
+            condition=value,
+            default_value={'title': [{'text': {'content': value}}]},
+            fallback_value={'title': []}
+        )
 
 
 class RichText(Property):
