@@ -40,11 +40,15 @@ class Title(Property):
 
 
 class RichText(Property):
-    def get_value(self, object_dict: dict) -> str:
-        # todo fix bug empty property
-        return object_dict['rich_text'][0]['text']['content']
+    def get_value(self, object_dict: dict) -> Optional[str]:
+        # The default behavior is to give an empty string if it is empty, however
+        # it doesn't mix well with the other properties, it is therefore coerced
+        # into `None` if empty.
+        content = find(object_dict, ['rich_text', 0, 'text', 'content'])
+        return content if content != '' else None
 
-    def get_object(self, value: str) -> dict:
+    def get_object(self, value: Optional[str]) -> dict:
+        value = '' if value is None else value
         return {'rich_text': [{'text': {'content': value}}]}
 
 
