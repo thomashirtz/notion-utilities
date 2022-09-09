@@ -53,10 +53,10 @@ class RichText(Property):
 
 
 class Number(Property):
-    def get_value(self, object_dict: dict) -> Any:
+    def get_value(self, object_dict: dict) -> Optional[Union[float, int]]:
         return object_dict['number']
 
-    def get_object(self, value: str) -> dict:
+    def get_object(self, value: Optional[Union[float, int]]) -> dict:
         return {'number': value}
 
 
