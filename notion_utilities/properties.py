@@ -54,32 +54,10 @@ class RichText(Property):
 
 class Number(Property):
     def get_value(self, object_dict: dict) -> Optional[Union[float, int]]:
-        return object_dict['number']
+        return object_dict['number'] # I think those needs to be transformed in ANy
 
     def get_object(self, value: Optional[Union[float, int]]) -> dict:
         return {'number': value}
-
-
-class URL(Property):
-    def get_value(self, object_dict: dict) -> str:
-        return object_dict['number']
-
-    def get_object(self, value: str) -> dict:
-        return {'number': value}
-
-
-class Checkbox(Property):
-    def get_value(self, object_dict: dict) -> Any:
-        return object_dict['checkbox']
-
-    def get_object(self, value: str) -> dict:
-        return {'checkbox': value}
-
-
-class Formula(Property):
-    def get_value(self, object_dict: dict) -> Any:
-        formula_type = object_dict['formula']['type']
-        return object_dict['formula'][formula_type]
 
 
 class Select(Property):
@@ -90,13 +68,65 @@ class Select(Property):
         return {'select': {'name': value}}
 
 
+class MultiSelect(Property):
+    ...
+
+
 class Status(Property):
-    def get_value(self, object_dict: dict) -> str:
-        status = object_dict['status']
-        return '' if status is None else status['name']
+    def get_value(self, object_dict: dict) -> Optional[str]:
+        return find(object_dict, ['status', 'name'])
 
     def get_object(self, value: Optional[str]) -> dict:
-        if value is None or not value:
-            return {'status': None}
-        else:
-            return {'status': {'name': value}}
+        return fallback(
+            condition=value,
+            default_value={'status': {'name': value}},
+            fallback_value={'status': None},
+        )
+
+
+class Date(Property):
+    ...
+
+
+class Person(Property):
+    ...
+
+
+class FileAndMedia(Property):
+    ...
+
+
+class Checkbox(Property):
+    def get_value(self, object_dict: dict) -> Any:
+        return object_dict['checkbox']
+
+    def get_object(self, value: str) -> dict:
+        return {'checkbox': value}
+
+
+class URL(Property):
+    def get_value(self, object_dict: dict) -> Optional[str]:
+        return object_dict['url']
+
+    def get_object(self, value: Optional[str]) -> dict:
+        # An URL cannot be an empty string # todo also it can only be a string but not sure how to convert a priori
+        return {'url': value}# str(value) if value != '' else None}
+
+
+class Email(Property):
+    ...
+
+
+class Phone(Property):
+    ...
+
+
+class Formula(Property):
+    def get_value(self, object_dict: dict) -> Any:
+        formula_type = object_dict['formula']['type']
+        return object_dict['formula'][formula_type]
+
+
+
+
+
