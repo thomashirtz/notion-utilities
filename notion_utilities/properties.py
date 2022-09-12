@@ -93,7 +93,11 @@ class URL(Property):
 
 
 class Email(Property):
-    ...
+    def get_value(self, object_dict: dict) -> Any:
+        return object_dict['email']
+
+    def get_object(self, value: str) -> dict:
+        return {'email': value}
 
 
 class Phone(Property):
