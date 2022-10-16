@@ -4,7 +4,7 @@ Library to perform basic transformation on notion database.
 
 ## Installation
 
-```
+```console
 pip install git+https://github.com/thomashirtz/notion-utilities#egg=notion-utilities
 ```
 
@@ -38,7 +38,7 @@ Create the script that you want to run and set the `token` and the `database_id`
 
 ### Add a suffix, a prefix or apply a transformation
 
-```
+```python
 from notion_utilities import apply_to_database
 from notion_utilities.properties import RichText
 
@@ -63,7 +63,7 @@ if __name__ == '__main__':
 ### Possibility to use several properties and assign to several properties
 
 
-```
+```python
 from notion_utilities import apply_to_database
 from notion_utilities.properties import RichText
 
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     )
 ```
 
-```
+```python
 from notion_utilities import apply_to_database
 from notion_utilities.properties import RichText
 
@@ -111,7 +111,7 @@ if __name__ == '__main__':
 
 
 ### Property transformation (e.g. transform to pinyin)
-```
+```python
 import pinyin
 
 from notion_utilities import apply_to_database
