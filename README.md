@@ -1,6 +1,10 @@
 # notion-utilities
 
-Library to perform basic transformation on notion database.
+Library to perform basic transformation on notion database. It is possible to 
+apply function on a property or combinations of properties in order to edit properties.
+
+⚠ Use at your own risk. If you want to be safe, please apply the functions on copies of the
+properties you want to edit (Or at least when testing the proper working of your code).
 
 ## Installation
 
@@ -33,17 +37,18 @@ Extract the `database_id` from the URL : `https://www.notion.so/<workspace_name>
 
 Create the script that you want to run and set the `token` and the `database_id` with the one got from the [step 1](#1-creation-of-an-integration) and the [step 2](#2-share-the-database-with-the-integration), respectively.
 
-## Examples of use case:
+## Examples
 
+<details open>
 
-### Add a suffix, a prefix or apply a transformation
+  <summary><b>Add a suffix, a prefix or apply a transformation</b></summary>
 
-```python
+  ```python
 from notion_utilities import apply_to_database
 from notion_utilities.properties import RichText
 
 
-def suffix_and_prefix(value):
+def add_suffix_and_prefix(value):
     return 'suffix_' + value + '_prefix'
 
 
@@ -56,12 +61,17 @@ if __name__ == '__main__':
         database_id=database_id,
         source=RichText('Input'),
         target=RichText('Output'),
-        function=suffix_and_prefix,
+        function=add_suffix_and_prefix,
     )
 ```
 
-### Possibility to use several properties and assign to several properties
+</details>
 
+
+
+<details>
+
+  <summary><b>Possibility to use several properties and assign to several properties</b></summary>
 
 ```python
 from notion_utilities import apply_to_database
@@ -109,8 +119,13 @@ if __name__ == '__main__':
     )
 ```
 
+</details>
 
-### Property transformation (e.g. transform to pinyin)
+
+<details>
+
+  <summary><b>Property transformation (e.g. transform chinese characters to pinyin)</b></summary>
+
 ```python
 import pinyin
 
@@ -135,8 +150,9 @@ if __name__ == '__main__':
     )
 ```
 
+</details>
 
-# License
+## License
 
      Copyright 2022 Thomas Hirtz
 
